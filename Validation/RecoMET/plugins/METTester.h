@@ -39,7 +39,8 @@
 #include "DQMServices/Core/interface/MonitorElement.h"
 #include "FWCore/Utilities/interface/InputTag.h"
 #include "FWCore/Utilities/interface/EDGetToken.h"
-#include "FWCore/Framework/interface/EDAnalyzer.h"
+//#include "FWCore/Framework/interface/DQMEDAnalyzer.h"
+#include "DQMServices/Core/interface/DQMEDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
@@ -47,7 +48,7 @@
 #include "TMath.h"
 
 
-class METTester: public edm::EDAnalyzer {
+class METTester: public edm::DQMEDAnalyzer {
 public:
 
   explicit METTester(const edm::ParameterSet&);
