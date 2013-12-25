@@ -18,7 +18,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 process.load("DQMServices.Core.DQM_cfg")
 
 
-process.load("Validation.RecoMET.METRelValForDQM_cff"))
+process.load("Validation.RecoMET.METRelValForDQM_cff")
 
 
 process.DQMStore = cms.Service("DQMStore")
@@ -36,7 +36,7 @@ process.source = cms.Source("PoolSource",
 
 #process.Tracer = cms.Service("Tracer")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10) )
 
 
 #process.fileSaver = cms.EDAnalyzer("METFileSaver",
@@ -48,6 +48,7 @@ process.p = cms.Path(#process.fileSaver*
                      #                     process.genMetCaloAndNonPrompt*
                      #                     process.tcMet*
                      process.METValidation
+#*process.METTesterPostProcessor
 )
 process.DQM.collectorHost = ''
 
