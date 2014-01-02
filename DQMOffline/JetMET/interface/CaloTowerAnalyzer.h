@@ -13,6 +13,11 @@
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Utilities/interface/InputTag.h"
 
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "DataFormats/CaloTowers/interface/CaloTower.h"
+#include "DataFormats/CaloTowers/interface/CaloTowerCollection.h"
+#include "CommonTools/RecoAlgos/interface/HBHENoiseFilter.h"
+
 #include <string>
 #include <map>
 #include "DQMServices/Core/interface/MonitorElement.h"
@@ -37,6 +42,11 @@ private:
   std::vector< edm::InputTag >  HLTBitLabel_ ;
   edm::InputTag HLTResultsLabel_;
   edm::InputTag HBHENoiseFilterResultLabel_;
+
+  edm::EDGetTokenT<edm::TriggerResults>HLTResultsToken_;
+  edm::EDGetTokenT<CaloTowerCollection>caloTowersToken_;
+  edm::EDGetTokenT<bool>HBHENoiseFilterResultToken_;
+
   bool debug_;
   double energyThreshold_;
   bool allhist_;
