@@ -118,6 +118,7 @@
 #include "RecoMuon/TrackingTools/interface/MuonSegmentMatcher.h"
 #include "RecoMuon/TrackingTools/interface/MuonServiceProxy.h"
 
+
 //Root Classes
 
 #include "TH1F.h"
@@ -199,6 +200,8 @@ class BeamHaloAnalyzer: public edm::EDAnalyzer {
   std::string FolderName;
 
   std::ofstream* out;
+
+
   double DumpMET;
 
   //Muon-Segment Matching
