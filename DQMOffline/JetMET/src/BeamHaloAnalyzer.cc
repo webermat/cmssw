@@ -71,7 +71,6 @@ BeamHaloAnalyzer::BeamHaloAnalyzer( const edm::ParameterSet& iConfig)
   edm::ParameterSet matchParameters = iConfig.getParameter<edm::ParameterSet>("MatchParameters");
   edm::ConsumesCollector iC  = consumesCollector();
   TheMatcher = new MuonSegmentMatcher(matchParameters, TheService,iC);
-
 }
 
 
