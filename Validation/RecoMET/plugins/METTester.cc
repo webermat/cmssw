@@ -77,9 +77,13 @@ METTester::METTester(const edm::ParameterSet& iConfig)
   }
   genMETsTrueToken_ = consumes<reco::GenMETCollection> (edm::InputTag("genMetTrue"));
   genMETsCaloToken_ = consumes<reco::GenMETCollection> (edm::InputTag("genMetCalo"));
+}
+
+
+void METTester::dqmBeginRun(const edm::Run& iRun, const edm::EventSetup& iSetup)
+{
   //Events variables
   mNvertex               = 0;
-
   //Common variables
   mMEx                         = 0;
   mMEy                         = 0;
@@ -108,7 +112,6 @@ METTester::METTester(const edm::ParameterSet& iConfig)
   mCaloSETInmHF                    = 0;
   mCaloEmEtInEE                    = 0;
   mCaloEmEtInEB                    = 0;
-
 
   //GenMET variables
   mNeutralEMEtFraction=0;
@@ -169,9 +172,7 @@ METTester::METTester(const edm::ParameterSet& iConfig)
   DQMStore* dbe_ = &*edm::Service<DQMStore>();
 
   if (dbe_) {
- 
     dbe_->setCurrentFolder("JetMET/METValidation/"+inputMETLabel_.label());
-
     mNvertex                     = dbe_->book1D("Nvertex","Nvertex",80,0,80);
     mMEx                         = dbe_->book1D("MEx","MEx",160,-800,800); 
     mMEy                         = dbe_->book1D("MEy","MEy",160,-800,800);
@@ -241,7 +242,6 @@ METTester::METTester(const edm::ParameterSet& iConfig)
       mPFHFHadronEt = dbe_->book1D("HFHadronEt", "HFHadronEt", 100, 0, 500);
       mPFHFEMEtFraction = dbe_->book1D("HFEMEtFraction", "HFEMEtFraction", 100, 0, 1);
       mPFHFEMEt = dbe_->book1D("HFEMEt", "HFEMEt", 100, 0, 300);
-
     }
 
     if ( isTcMET){
@@ -251,39 +251,37 @@ METTester::METTester(const edm::ParameterSet& iConfig)
       mMEyCorrection       = dbe_->book1D("MEyCorrection","MEyCorrection", 1000, -500.0,500.0);
       mMuonCorrectionFlag      = dbe_->book1D("CorrectionFlag", "CorrectionFlag", 6, -0.5, 5.5);
 
-      if(isTcMET) {//TCMET only histograms
-        mtrkPt = dbe_->book1D("trackPt", "trackPt", 50, 0, 500);
-        mtrkEta = dbe_->book1D("trackEta", "trackEta", 50, -2.5, 2.5);
-        mtrkNhits = dbe_->book1D("trackNhits", "trackNhits", 50, 0, 50);
-        mtrkChi2 = dbe_->book1D("trackNormalizedChi2", "trackNormalizedChi2", 20, 0, 20);
-        mtrkD0 = dbe_->book1D("trackD0", "trackd0", 50, -1, 1);
-        mtrkQuality = dbe_->book1D("trackQuality", "trackQuality", 30, -0.5, 29.5);
-        mtrkAlgo = dbe_->book1D("trackAlgo", "trackAlgo", 6, 3.5, 9.5);
-        mtrkPtErr = dbe_->book1D("trackPtErr", "trackPtErr", 200, 0, 2);
-        melePt = dbe_->book1D("electronPt", "electronPt", 50, 0, 500);
-        meleEta = dbe_->book1D("electronEta", "electronEta", 50, -2.5, 2.5);
-        meleHoE = dbe_->book1D("electronHoverE", "electronHoverE", 25, 0, 0.5);
-        mmuPt = dbe_->book1D("muonPt", "muonPt", 50, 0, 500);
-        mmuEta = dbe_->book1D("muonEta", "muonEta", 50, -2.5, 2.5);
-        mmuNhits = dbe_->book1D("muonNhits", "muonNhits", 50, 0, 50);
-        mmuChi2 = dbe_->book1D("muonNormalizedChi2", "muonNormalizedChi2", 20, 0, 20);
-        mmuD0 = dbe_->book1D("muonD0", "muonD0", 50, -1, 1);
-        mnMus = dbe_->book1D("nMus", "nMus", 5, -0.5, 4.5);
-        mnMusPis = dbe_->book1D("nMusAsPis", "nMusAsPis", 5, -0.5, 4.5);
-        mnEls = dbe_->book1D("nEls", "nEls", 5, -0.5, 4.5);
-        mfracTrks = dbe_->book1D("fracTracks", "fracTracks", 100, 0, 1);
-        mdMETx = dbe_->book1D("dMETx", "difference to caloMETx", 500, -250, 250);
-        mdMETy = dbe_->book1D("dMETy", "difference to caloMETy", 500, -250, 250);
-        mdMET = dbe_->book1D("dMET", "difference to caloMET", 500, -250, 250);
-        mdMUx = dbe_->book1D("dMUx", "dMUx", 500, -250, 250);
-        mdMUy = dbe_->book1D("dMUy", "dMUy", 500, -250, 250);
-        mMuonCorrectionFlag->setBinLabel(1,"Not Corrected");
-        mMuonCorrectionFlag->setBinLabel(2,"Global Fit");
-        mMuonCorrectionFlag->setBinLabel(3,"Tracker Fit");
-        mMuonCorrectionFlag->setBinLabel(4,"SA Fit");
-        mMuonCorrectionFlag->setBinLabel(5,"Treated as Pion");
-        mMuonCorrectionFlag->setBinLabel(6,"Default fit");
-      }
+      mtrkPt = dbe_->book1D("trackPt", "trackPt", 50, 0, 500);
+      mtrkEta = dbe_->book1D("trackEta", "trackEta", 50, -2.5, 2.5);
+      mtrkNhits = dbe_->book1D("trackNhits", "trackNhits", 50, 0, 50);
+      mtrkChi2 = dbe_->book1D("trackNormalizedChi2", "trackNormalizedChi2", 20, 0, 20);
+      mtrkD0 = dbe_->book1D("trackD0", "trackd0", 50, -1, 1);
+      mtrkQuality = dbe_->book1D("trackQuality", "trackQuality", 30, -0.5, 29.5);
+      mtrkAlgo = dbe_->book1D("trackAlgo", "trackAlgo", 6, 3.5, 9.5);
+      mtrkPtErr = dbe_->book1D("trackPtErr", "trackPtErr", 200, 0, 2);
+      melePt = dbe_->book1D("electronPt", "electronPt", 50, 0, 500);
+      meleEta = dbe_->book1D("electronEta", "electronEta", 50, -2.5, 2.5);
+      meleHoE = dbe_->book1D("electronHoverE", "electronHoverE", 25, 0, 0.5);
+      mmuPt = dbe_->book1D("muonPt", "muonPt", 50, 0, 500);
+      mmuEta = dbe_->book1D("muonEta", "muonEta", 50, -2.5, 2.5);
+      mmuNhits = dbe_->book1D("muonNhits", "muonNhits", 50, 0, 50);
+      mmuChi2 = dbe_->book1D("muonNormalizedChi2", "muonNormalizedChi2", 20, 0, 20);
+      mmuD0 = dbe_->book1D("muonD0", "muonD0", 50, -1, 1);
+      mnMus = dbe_->book1D("nMus", "nMus", 5, -0.5, 4.5);
+      mnMusPis = dbe_->book1D("nMusAsPis", "nMusAsPis", 5, -0.5, 4.5);
+      mnEls = dbe_->book1D("nEls", "nEls", 5, -0.5, 4.5);
+      mfracTrks = dbe_->book1D("fracTracks", "fracTracks", 100, 0, 1);
+      mdMETx = dbe_->book1D("dMETx", "difference to caloMETx", 500, -250, 250);
+      mdMETy = dbe_->book1D("dMETy", "difference to caloMETy", 500, -250, 250);
+      mdMET = dbe_->book1D("dMET", "difference to caloMET", 500, -250, 250);
+      mdMUx = dbe_->book1D("dMUx", "dMUx", 500, -250, 250);
+      mdMUy = dbe_->book1D("dMUy", "dMUy", 500, -250, 250);
+      mMuonCorrectionFlag->setBinLabel(1,"Not Corrected");
+      mMuonCorrectionFlag->setBinLabel(2,"Global Fit");
+      mMuonCorrectionFlag->setBinLabel(3,"Tracker Fit");
+      mMuonCorrectionFlag->setBinLabel(4,"SA Fit");
+      mMuonCorrectionFlag->setBinLabel(5,"Treated as Pion");
+      mMuonCorrectionFlag->setBinLabel(6,"Default fit");
 //      if(isCorMET) {
 //        mmuPt = dbe_->book1D("muonPt", "muonPt", 50, 0, 500);
 //        mmuEta = dbe_->book1D("muonEta", "muonEta", 50, -2.5, 2.5);
@@ -303,20 +301,11 @@ METTester::METTester(const edm::ParameterSet& iConfig)
       edm::LogInfo("OutputInfo") << " METType not correctly specified!'";// << outputFile_.c_str();
     }
   }
-  if (mOutputFile.empty ())
-    {
-      LogInfo("OutputInfo") << " Histograms will NOT be saved";
-    }
-  else
-    {
-      LogInfo("OutputInfo") << " Histograms will be saved to file:" << mOutputFile;
-    }
-}
-
-
-void METTester::beginRun(const edm::Run& iRun, const edm::EventSetup& iSetup)
-{
-
+  if (mOutputFile.empty ())  {
+    LogInfo("OutputInfo") << " Histograms will NOT be saved";
+  } else {
+    LogInfo("OutputInfo") << " Histograms will be saved to file:" << mOutputFile;
+  }
 }
 
 void METTester::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)

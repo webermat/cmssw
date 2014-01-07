@@ -39,7 +39,7 @@
 #include "DQMServices/Core/interface/MonitorElement.h"
 #include "FWCore/Utilities/interface/InputTag.h"
 #include "FWCore/Utilities/interface/EDGetToken.h"
-//#include "FWCore/Framework/interface/DQMEDAnalyzer.h"
+//#include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "DQMServices/Core/interface/DQMEDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
@@ -48,19 +48,20 @@
 #include "TMath.h"
 
 
-class METTester: public edm::DQMEDAnalyzer {
+class METTester: public DQMEDAnalyzer {
 public:
 
   explicit METTester(const edm::ParameterSet&);
 
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
   //virtual void beginJob() ;
-  virtual void beginRun(const edm::Run&, const edm::EventSetup&) ;
+  virtual void dqmBeginRun(const edm::Run&, const edm::EventSetup&) ;
   //virtual void beginJob() ;
   virtual void endJob() ;
 //  virtual void endRun(const edm::Run&, const edm::EventSetup&);
 	void FillMETRes();
 
+//  virtual void bookHistograms(DQMStore::IBooker &i, edm::Run const&, edm::EventSetup const&) = 0;
 
  private:
 
