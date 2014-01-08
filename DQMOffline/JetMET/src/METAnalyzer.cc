@@ -1508,7 +1508,6 @@ void METAnalyzer::fillMonitorElement(const edm::Event& iEvent, std::string DirNa
 	  heleHoE = _dbe->get(DirName+"/"+"METTask_electronHoverE");  if (heleHoE && heleHoE->getRootObject())  heleHoE->Fill( eleit->hadronicOverEm() );
 	}
       }else{
-
 	std::cout<<"electrons not valid"<<std::endl;
       }
 
@@ -1522,7 +1521,6 @@ void METAnalyzer::fillMonitorElement(const edm::Event& iEvent, std::string DirNa
 	  double d0 = siTrack.isNonnull() ? -1 * siTrack->dxy( bspot) : -999;
 	  hmuD0    = _dbe->get(DirName+"/"+"METTask_muonD0");     if (hmuD0    && hmuD0->getRootObject())  hmuD0->Fill( d0 );
 	}
-
 	const unsigned int nMuons = muon_h->size();
 	for( unsigned int mus = 0; mus < nMuons; mus++ ) {
 	  reco::MuonRef muref( muon_h, mus);
@@ -1531,9 +1529,10 @@ void METAnalyzer::fillMonitorElement(const edm::Event& iEvent, std::string DirNa
 	  hMEyCorrection      = _dbe->get(DirName+"/"+"METTask_MEyCorrection");       if (hMEyCorrection      && hMEyCorrection->getRootObject())       hMEyCorrection-> Fill(muCorrData.corrX());
 	  hMuonCorrectionFlag = _dbe->get(DirName+"/"+"METTask_CorrectionFlag");  if (hMuonCorrectionFlag && hMuonCorrectionFlag->getRootObject())  hMuonCorrectionFlag-> Fill(muCorrData.type());
 	}
+      }else{
+	std::cout<<"muons not valid"<<std::endl;
       }
     }
-
   } // et threshold cut
 
 }
@@ -1554,7 +1553,6 @@ bool METAnalyzer::selectHighPtJetEvent(const edm::Event& iEvent){
     for (reco::CaloJetCollection::const_iterator cal = caloJets->begin();
 	 cal!=caloJets->end(); ++cal){
       if (cal->pt()>_highPtJetThreshold){
-	std::cout<<"should be in high pt"<<std::endl;
 	return_value=true;
       }
     }
