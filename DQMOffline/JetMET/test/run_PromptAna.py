@@ -53,15 +53,10 @@ if read_from_file=="True":
     f.close()
 else:
   inputfiles = os.environ.get('INPUTFILES',
-<<<<<<< HEAD
                             '/store/relval/CMSSW_7_0_0_pre11/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/POSTLS162_V4-v1/00000/F0127B3E-8A6A-E311-9A07-002590593902.root'
 #'/store/relval/CMSSW_5_3_6-GR_R_53_V15_RelVal_jet2012B/JetHT/RECO/v2/00000/FEC61CBE-062A-E211-AA5D-0026189438E4.root'
 ).split(",")
-=======
-                              #'/store/relval/CMSSW_7_0_0_pre8/RelValQCD_FlatPt_15_3000/GEN-SIM-RECO/PU_START70_V2_eg-v1/00000/FEFD7ED7-D952-E311-962B-0025905A605E.root'
-'/store/relval/CMSSW_7_0_0_pre11/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/POSTLS162_V4-v1/00000/F0127B3E-8A6A-E311-9A07-002590593902.root'.split(",")
-###'/store/relval/CMSSW_5_3_6-GR_R_53_V15_RelVal_jet2012B/JetHT/RECO/v2/00000/FEC61CBE-062A-E211-AA5D-0026189438E4.root').split(",")
-)
+
 print 'List of input files'
 print inputfiles
 #-----
