@@ -194,8 +194,8 @@ class METAnalyzer : public edm::EDAnalyzer{
   double nPVMin_; 
   double nPVMax_;
 
-  bool doPVCheck_;
-  bool doHLTPhysicsOn_;
+  bool bypassAllPVChecks_;
+//  bool doHLTPhysicsOn_;
 
   bool tightBHFiltering_;
   int  tightJetIDFiltering_;
