@@ -38,7 +38,8 @@ class METTesterPostProcessor : public edm::EDAnalyzer
   edm::InputTag inputMETLabel_;
   MonitorElement* mMETResolution_GenMETTrue_METResolution;
   edm::ParameterSet iConfig;
-  void FillpfMETRes();
+  std::vector<std::string> met_dirs;
+  void FillpfMETRes(std::string metdir);
   MonitorElement* mMETDifference_GenMETTrue_MET0to20;
   MonitorElement* mMETDifference_GenMETTrue_MET20to40;
   MonitorElement* mMETDifference_GenMETTrue_MET40to60;
