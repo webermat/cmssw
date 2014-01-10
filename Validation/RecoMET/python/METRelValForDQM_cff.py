@@ -4,6 +4,7 @@ import FWCore.ParameterSet.Config as cms
 # Date: 03.01.09
 # Fill validation histograms for MET.
 from Validation.RecoMET.METValidation_cfi import *
+from Validation.RecoMET.METTesterPostProcessor_cff import *
 
 #Removed the MET collections that we no longer monitor
 #in an attempt to reduce the number of histograms produced
@@ -41,7 +42,8 @@ METRelValSequence = cms.Sequence(
     pfType01CorrectedMet*
     pfType0CorrectedMetAnalyzer*
     pfType1CorrectedMetAnalyzer*
-    pfType01CorrectedMetAnalyzer
+    pfType01CorrectedMetAnalyzer*
+    METTesterPostProcessorSequence
 	 )
 
     
@@ -67,7 +69,8 @@ METValidation = cms.Sequence(
     pfType01CorrectedMet*
     pfType0CorrectedMetAnalyzer*
     pfType1CorrectedMetAnalyzer*
-    pfType01CorrectedMetAnalyzer
+    pfType01CorrectedMetAnalyzer*
+    METTesterPostProcessor
     )
 
     

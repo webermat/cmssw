@@ -196,10 +196,11 @@ METTester::METTester(const edm::ParameterSet& iConfig)
     mMETDifference_GenMETTrue_MET200to300 = dbe_->book1D("METResolution_GenMETTrue_MET200to300", "METResolution_GenMETTrue_MET200to300", 500,-500,500); 
     mMETDifference_GenMETTrue_MET300to400 = dbe_->book1D("METResolution_GenMETTrue_MET300to400", "METResolution_GenMETTrue_MET300to400", 500,-500,500); 
     mMETDifference_GenMETTrue_MET400to500 = dbe_->book1D("METResolution_GenMETTrue_MET400to500", "METResolution_GenMETTrue_MET400to500", 500,-500,500); 
-    //this will be filled at the end of the job using info from above hists
-    int nBins = 10;
-    float bins[] = {0.,20.,40.,60.,80.,100.,150.,200.,300.,400.,500.};
-    mMETDifference_GenMETTrue_METResolution     = dbe_->book1D("METResolution_GenMETTrue_InMETBins","METResolution_GenMETTrue_InMETBins",nBins, bins); 
+
+    // //this will be filled at the end of the job using info from above hists
+    // int nBins = 10;
+    // float bins[] = {0.,20.,40.,60.,80.,100.,150.,200.,300.,400.,500.};
+    // mMETDifference_GenMETTrue_METResolution     = dbe_->book1D("METResolution_GenMETTrue_InMETBins","METResolution_GenMETTrue_InMETBins",nBins, bins); 
 
     if ( isCaloMET) { 
       mCaloMaxEtInEmTowers             = dbe_->book1D("CaloMaxEtInEmTowers","CaloMaxEtInEmTowers",300,0,1500);   //5GeV
@@ -745,8 +746,8 @@ void METTester::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 //    }
 //  }
 
-  //This is so dirty I could cry. It should be called only ONCE in endJob. But the MonitorElements don't exist then any more.
-  FillMETRes();
+//  //This is so dirty I could cry. It should be called only ONCE in endJob. But the MonitorElements don't exist then any more.
+  //  FillMETRes();
 }
 
 void METTester::endJob() 
@@ -758,6 +759,7 @@ void METTester::endJob()
   
 }
 
+/*
 //void METTester::endRun(const edm::Run& iRun, const edm::EventSetup& iSetup)
 void METTester::FillMETRes()
 {
@@ -783,7 +785,7 @@ void METTester::FillMETRes()
   mMETDifference_GenMETTrue_METResolution->setBinError(10, mMETDifference_GenMETTrue_MET400to500->getRMS());
 
 }
-
+*/
 //determines if track is "good" - i.e. passes quality and kinematic cuts
 bool METTester::isGoodTrack( const reco::TrackRef track, float d0corr ) {
 

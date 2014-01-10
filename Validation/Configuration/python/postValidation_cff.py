@@ -14,6 +14,7 @@ from Validation.RecoParticleFlow.PFValidationClient_cff import *
 from Validation.RPCRecHits.postValidation_cfi import *
 from Validation.RecoTau.DQMMCValidation_cfi import *
 from Validation.RecoEgamma.photonFastSimPostProcessor_cff import *
+from Validation.RecoMET.METTesterPostProcessor_cff import *
 from DQMOffline.RecoB.dqmCollector_cff import *
 
 
@@ -26,6 +27,7 @@ postValidation = cms.Sequence(
     + hcaldigisPostProcessor
     + hcalrechitsPostProcessor
     + electronPostValidationSequence + photonPostProcessor
+    + METTesterPostProcessor
     + pfJetClient + pfMETClient + pfJetResClient + pfElectronClient
     + rpcRecHitPostValidation_step
     + runTauEff + makeBetterPlots
