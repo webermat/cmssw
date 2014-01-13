@@ -951,7 +951,8 @@ void JetAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   if (isPFJet_)    jetCollectionIsValid = pfJets.isValid();
 
 
-  //FIXME: Robert, check this. if (jetCleaningFlag_ && (!jetCollectionIsValid || !bPrimaryVertex || !dcsDecision)) return;
+  //FIXME: Robert, check this. 
+  if (jetCleaningFlag_ && (!jetCollectionIsValid || !bPrimaryVertex || !dcsDecision)) return;
 
   unsigned int collSize=-1;
   if (isCaloJet_)  collSize = caloJets->size();
