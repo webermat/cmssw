@@ -87,7 +87,7 @@ class METAnalyzer : public edm::EDAnalyzer{
   // Book MonitorElements
   void bookMESet(std::string);
   void bookMonitorElement(std::string, bool);
-  void bookMonitorElementTriggered(std::string, bool);
+//  void bookMonitorElementTriggered(std::string, bool);
 
   /// Get the analysis
   void analyze(const edm::Event&, const edm::EventSetup&);
@@ -163,12 +163,15 @@ class METAnalyzer : public edm::EDAnalyzer{
   edm::Handle< edm::View<reco::GsfElectron > >  electronHandle_;
   edm::Handle< reco::BeamSpot >                 beamSpotHandle_;
 
-
+  bool changed_;
+  HLTConfigProvider hltConfig_;
   edm::InputTag                         triggerResultsLabel_;
   edm::EDGetTokenT<edm::TriggerResults> triggerResultsToken_;
 
   // list of Jet or MB HLT triggers
-  std::vector<std::string > HLTPathsJetMBByName_;
+//  std::vector<std::string > HLTPathsJetMBByName_;
+  std::vector<std::string > allTriggerNames_;
+  std::vector< int > allTriggerDecisions_;
 
   edm::VParameterSet triggerSelectedSubFolders_;
   std::vector<GenericTriggerEventFlag *>  triggerFolderEventFlag_;
@@ -249,8 +252,8 @@ class METAnalyzer : public edm::EDAnalyzer{
   //for all MET types
 
   //only in for PF
-  MonitorElement* meTriggerName_PhysDec;
-
+//  MonitorElement* meTriggerName_PhysDec;
+  MonitorElement* hTrigger;
   //MonitorElement* hNevents;
   MonitorElement* hMEx;
   MonitorElement* hMEy;
