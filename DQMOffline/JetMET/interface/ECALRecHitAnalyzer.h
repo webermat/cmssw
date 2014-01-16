@@ -100,6 +100,11 @@ public:
   // Inputs from Configuration
   edm::InputTag EBRecHitsLabel_;
   edm::InputTag EERecHitsLabel_;
+
+  // Inputs from Configuration
+  edm::EDGetTokenT<EcalRecHitCollection>EERecHitsToken_;
+  edm::EDGetTokenT<EcalRecHitCollection>EBRecHitsToken_;
+
   bool debug_;
   bool finebinning_;
   std::string FolderName_;
