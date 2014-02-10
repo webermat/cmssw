@@ -14,6 +14,8 @@ class JetMETDQMDCSFilter {
 
  public:
   JetMETDQMDCSFilter( const edm::ParameterSet &, edm::ConsumesCollector&);
+  JetMETDQMDCSFilter( const std::string & detectorTypes, const bool verbose = false, const bool alwaysPass = false );
+
   ~JetMETDQMDCSFilter();
   bool filter(const edm::Event& evt, const edm::EventSetup& es);
   bool passPIX, passSiStrip, passECAL, passHBHE, passHF, passHO, passES, passMuon;
@@ -24,6 +26,10 @@ class JetMETDQMDCSFilter {
   bool filter_;
   bool detectorOn_;
   std::string detectorTypes_;
+  //edm::EDGetTokenT<reco::PFJetCollection>DCSStatusToken_;
+
+  edm::InputTag DCSStatusLabel_;
+
 
 };
 

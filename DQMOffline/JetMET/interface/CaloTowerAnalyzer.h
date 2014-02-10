@@ -40,6 +40,7 @@ private:
   std::vector< edm::InputTag >  HLTBitLabel_ ;
   edm::EDGetTokenT<edm::TriggerResults> HLTResultsLabel_;
   edm::EDGetTokenT<bool> HBHENoiseFilterResultLabel_;
+
   bool debug_;
   double energyThreshold_;
   bool allhist_;

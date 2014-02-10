@@ -11,13 +11,35 @@
 
 #include <iostream>
  
+using namespace edm;
+using namespace std;
+using namespace reco;
+
 //
 // -- Constructor
 //
 JetMETDQMDCSFilter::JetMETDQMDCSFilter( const edm::ParameterSet & pset, edm::ConsumesCollector& iC) {
    verbose_       = pset.getUntrackedParameter<bool>( "DebugOn", false );
    detectorTypes_ = pset.getUntrackedParameter<std::string>( "DetectorTypes", "ecal:hcal");
-   filter_        = pset.getUntrackedParameter<bool>( "Filter", true );
+   filter_        = !pset.getUntrackedParameter<bool>( "alwaysPass", false );
+   DCSStatusLabel_= edm::InputTag("scalersRawToDigi");
+   //DCSStatusLabel_ = pset.getParameter<edm::InputTag>("scalersRawToDigi");  
+   //DCSStatusToken_ = consumes<reco::PFJetCollection>(DCSStatusLabel_);
+   detectorOn_    = false;
+   if (verbose_) std::cout << "JetMETDQMDCSFilter constructor: " << detectorTypes_ << std::endl;
+
+   passPIX = false, passSiStrip = false;
+   passECAL = false, passES = false;
+   passHBHE = false, passHF = false, passHO = false;
+   passMuon = false;
+}
+JetMETDQMDCSFilter::JetMETDQMDCSFilter( const std::string & detectorTypes, const bool verbose, const bool alwaysPass) {
+   verbose_       = verbose;
+   detectorTypes_ = detectorTypes;
+   filter_        = !alwaysPass;
+   DCSStatusLabel_= edm::InputTag("scalersRawToDigi");
+   //DCSStatusLabel_ = pset.getParameter<edm::InputTag>("scalersRawToDigi");  
+   //DCSStatusToken_ = consumes<reco::PFJetCollection>(DCSStatusLabel_);
    detectorOn_    = false;
    if (verbose_) std::cout << "JetMETDQMDCSFilter constructor: " << detectorTypes_ << std::endl;
 
@@ -28,6 +50,7 @@ JetMETDQMDCSFilter::JetMETDQMDCSFilter( const edm::ParameterSet & pset, edm::Con
 
    scalarsToken = iC.consumes<DcsStatusCollection > (std::string("scalersRawToDigi"));
 }
+
 //
 // -- Destructor
 //
@@ -119,9 +142,7 @@ bool JetMETDQMDCSFilter::filter(const edm::Event & evt, const edm::EventSetup & 
     }    
 
   }
-
   return detectorOn_;
-
 }
 
 //#include "FWCore/Framework/interface/MakerMacros.h"
