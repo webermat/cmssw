@@ -5,15 +5,14 @@ process = cms.Process("JetMETDQMOffline")
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
-from Configuration.Geometry.GeometryIdeal_cff import *
-### process.load("Configuration/StandardSequences/Geometry_cff") ### Deprecated
-process.load("Configuration.StandardSequences.GeometryDB_cff")
+from Configuration.Geometry.GeometryRecoDB_cff import *
+process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.Reconstruction_cff")
 process.load("Configuration/StandardSequences/MagneticField_cff")
 process.load("Configuration/StandardSequences/FrontierConditions_GlobalTag_cff")
 
 #for data in 720pre7
-process.GlobalTag.globaltag ='GR_R_73_V0A::All'
+process.GlobalTag.globaltag ='GR_R_74_V0A::All'
 
 # check # of bins
 process.load("DQMServices.Components.DQMStoreStats_cfi")
@@ -23,12 +22,15 @@ secFiles = cms.untracked.vstring()
 process.source = cms.Source ("PoolSource",fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
        #for data
-       '/store/relval/CMSSW_7_3_0_pre1/JetHT/RECO/PRE_R_72_V10A_RelVal_jet2012C-v1/00000/04F00191-E359-E411-91F8-0025905A610C.root',
-       '/store/relval/CMSSW_7_3_0_pre1/JetHT/RECO/PRE_R_72_V10A_RelVal_jet2012C-v1/00000/06F034BB-F259-E411-AFC2-00261894384F.root',
-       '/store/relval/CMSSW_7_3_0_pre1/JetHT/RECO/PRE_R_72_V10A_RelVal_jet2012C-v1/00000/0A051B54-EC59-E411-95E5-002618FDA259.root',
-       '/store/relval/CMSSW_7_3_0_pre1/JetHT/RECO/PRE_R_72_V10A_RelVal_jet2012C-v1/00000/0A1AF8FF-F859-E411-A40F-0025905A6110.root'
+       '/store/relval/CMSSW_7_4_0_pre6/JetHT/RECO/GR_R_74_V0A_RelVal_jet2012D-v1/00000/000FEFFF-CCA8-E411-BB29-003048FF9AC6.root',
        #for cosmics
-       #'/store/data/Commissioning2014/Cosmics/RECO/PromptReco-v4/000/228/734/00000/10C180A7-2866-E411-B6F9-02163E010F8C.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/0032E64F-C2A8-E411-A65D-0026189438B0.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/0293F951-C2A8-E411-A283-0025905964A6.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/0E917652-C2A8-E411-9FED-0025905A6132.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/14715D62-C2A8-E411-9F15-003048FFCB9E.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/1477B455-C2A8-E411-95CA-0025905964C4.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/224CBE45-C2A8-E411-B530-0026189438BC.root',
+       #'/store/relval/CMSSW_7_4_0_pre6/Cosmics/RECO/GR_R_74_V0A_RelVal_cos2011A-v1/00000/2287AE4C-C2A8-E411-823B-002618943902.root'
        #for MC
        #'/store/relval/CMSSW_7_3_0_pre1/RelValTTbar_13/GEN-SIM-RECO/PU50ns_PRE_LS172_V16-v1/00000/22A79853-D85E-E411-BAA9-02163E00C055.root',
        #'/store/relval/CMSSW_7_3_0_pre1/RelValTTbar_13/GEN-SIM-RECO/PU50ns_PRE_LS172_V16-v1/00000/28923A16-C95E-E411-871C-02163E00FFCE.root',
