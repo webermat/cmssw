@@ -33,8 +33,8 @@ readFiles.extend( [
        '/store/relval/CMSSW_7_4_0_pre8/RelValTTbar_13/GEN-SIM-RECO/MCRUN2_74_V7-v1/00000/706A960F-54BD-E411-8561-00261894384F.root',
        '/store/relval/CMSSW_7_4_0_pre8/RelValTTbar_13/GEN-SIM-RECO/MCRUN2_74_V7-v1/00000/E4EF6410-54BD-E411-8838-002590593920.root',
        '/store/relval/CMSSW_7_4_0_pre8/RelValTTbar_13/GEN-SIM-RECO/MCRUN2_74_V7-v1/00000/FA18AB00-3EBD-E411-AAE8-0025905A608A.root'
-        #for MINIAODtests 
-        #'/store/relval/CMSSW_7_3_0_pre1/RelValTTbar_13/MINIAODSIM/PU50ns_PRE_LS172_V16-v1/00000/9886ACB4-F45E-E411-9E5D-02163E00F01E.root' 
+        #for MINIAODtests
+        #'/store/relval/CMSSW_7_3_0_pre1/RelValTTbar_13/MINIAODSIM/PU50ns_PRE_LS172_V16-v1/00000/9886ACB4-F45E-E411-9E5D-02163E00F01E.root'
 ] );
 
 process.load('Configuration/StandardSequences/EDMtoMEAtJobEnd_cff')
