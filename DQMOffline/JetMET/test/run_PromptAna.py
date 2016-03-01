@@ -13,7 +13,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.StandardSequences.Services_cff')
 
 #for data in 720pre7
-process.GlobalTag.globaltag ='76X_mcRun2_asymptotic_v5'
+process.GlobalTag.globaltag ='80X_dataRun2_v4'
 
 # check # of bins
 process.load("DQMServices.Components.DQMStoreStats_cfi")
@@ -22,13 +22,23 @@ readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring() 
 process.source = cms.Source ("PoolSource",fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
-       '/store/relval/CMSSW_7_6_0_pre7/RelValQCD_FlatPt_15_3000HS_13/MINIAODSIM/76X_mcRun2_asymptotic_v5-v1/00000/7E692CF1-2971-E511-9609-0025905A497A.root',
-       '/store/relval/CMSSW_7_6_0_pre7/RelValQCD_FlatPt_15_3000HS_13/MINIAODSIM/76X_mcRun2_asymptotic_v5-v1/00000/B4DD46D7-2971-E511-B4DD-0025905A4964.root' 
-       #'/store/relval/CMSSW_7_5_2/JetHT/MINIAOD/75X_dataRun1_HLT_frozen_v2_RelVal_jet2012D-v1/00000/7CEB618B-8151-E511-8D05-002618943857.root',
-       #'/store/relval/CMSSW_7_5_2/JetHT/MINIAOD/75X_dataRun1_HLT_frozen_v2_RelVal_jet2012D-v1/00000/8A6ED13D-8351-E511-A6E1-0025905964C2.root',
-       #'/store/relval/CMSSW_7_5_2/JetHT/MINIAOD/75X_dataRun1_HLT_frozen_v2_RelVal_jet2012D-v1/00000/9A6F45A5-8251-E511-8BB5-0025905964A6.root',
-       #'/store/relval/CMSSW_7_5_2/JetHT/MINIAOD/75X_dataRun1_HLT_frozen_v2_RelVal_jet2012D-v1/00000/D6536366-7E51-E511-BC81-0025905A48F2.root',
-       #'/store/relval/CMSSW_7_5_2/JetHT/MINIAOD/75X_dataRun1_HLT_frozen_v2_RelVal_jet2012D-v1/00000/DE6F609B-8251-E511-940D-002618943916.root' 
+       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/3CE7A3C8-E8D6-E511-A91C-0CC47A78A436.root',
+       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/545783CA-E8D6-E511-A610-0025905B85CA.root',
+       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/5C7684C5-E8D6-E511-B9F7-0CC47A7452D0.root',
+       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/769043CD-E8D6-E511-8CC7-0CC47A78A3EE.root'
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/2A7077F8-DDD0-E511-81E1-0025905B860E.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/2C4C2526-E3D0-E511-A45A-002618FDA248.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/4C0F14C4-DCD0-E511-AD33-0CC47A4D76A2.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/5ABF258D-DFD0-E511-9F0D-0CC47A4D766C.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/6AE93260-DED0-E511-B224-0CC47A4C8ECA.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/76394723-DDD0-E511-960D-0025905A60EE.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/90D569F9-DDD0-E511-9CAA-0CC47A4C8E98.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/9E532FC7-E1D0-E511-B6B0-0CC47A78A472.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/9EC84D1E-E3D0-E511-97D3-0026189438EF.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/B8E9A1C7-DCD0-E511-BA3D-0025905B8612.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/C4C8F842-DED0-E511-B8D5-0025905A48E4.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/CE9E4596-DBD0-E511-AE7E-0025905A60F8.root',
+#'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/DCB8CE76-E0D0-E511-9DF5-0CC47A4D7600.root',
        ] );
 
 
