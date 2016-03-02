@@ -128,6 +128,29 @@ class PFCandidateAnalyzer : public DQMEDAnalyzer {
   double ptMinCand_;//pt min of candidates
   // Smallest raw HCAL energy linked to the track
   double hcalMin_;
+
+  MonitorElement* m_HoverTrackP_trackPtVsEta;
+  MonitorElement* m_HoverTrackPVsTrackP_Barrel;
+  MonitorElement* m_HoverTrackPVsTrackP_EndCap;
+
+  MonitorElement* m_HoverTrackPVsTrackPt_Barrel;
+  MonitorElement* m_HoverTrackPVsTrackPt_EndCap;
+
+  MonitorElement* m_HoverTrackPVsEta_hPt_1_10;
+  MonitorElement* m_HoverTrackPVsEta_hPt_10_20;
+  MonitorElement* m_HoverTrackPVsEta_hPt_20_50;
+  MonitorElement* m_HoverTrackPVsEta_hPt_50;
+
+  MonitorElement* m_HoverTrackP_Barrel_hPt_1_10;
+  MonitorElement* m_HoverTrackP_Barrel_hPt_10_20;
+  MonitorElement* m_HoverTrackP_Barrel_hPt_20_50;
+  MonitorElement* m_HoverTrackP_Barrel_hPt_50;
+
+  MonitorElement* m_HoverTrackP_EndCap_hPt_1_10;
+  MonitorElement* m_HoverTrackP_EndCap_hPt_10_20;
+  MonitorElement* m_HoverTrackP_EndCap_hPt_20_50;
+  MonitorElement* m_HoverTrackP_EndCap_hPt_50;
+
   MonitorElement* mProfileIsoPFChHad_HadPtCentral;
   MonitorElement* mProfileIsoPFChHad_HadPtEndcap;
   MonitorElement* mProfileIsoPFChHad_EMPtCentral;

@@ -22,10 +22,18 @@ readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring() 
 process.source = cms.Source ("PoolSource",fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
-       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/3CE7A3C8-E8D6-E511-A91C-0CC47A78A436.root',
-       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/545783CA-E8D6-E511-A610-0025905B85CA.root',
-       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/5C7684C5-E8D6-E511-B9F7-0CC47A7452D0.root',
-       '/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/769043CD-E8D6-E511-8CC7-0CC47A78A3EE.root'
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/0CC98651-85D6-E511-BE7B-0CC47A74525A.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/22E0BB66-86D6-E511-AE3D-0CC47A4C8ED8.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/4E42E9FF-86D6-E511-92B9-0CC47A4C8E5E.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/64F39457-85D6-E511-AAF5-0CC47A4C8E56.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/7C3142A9-85D6-E511-A146-0CC47A4D76A2.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/9CF03CAC-85D6-E511-8468-0025905A6066.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/EE06C02B-89D6-E511-B273-0025905B858A.root',
+       '/store/relval/CMSSW_8_0_0_pre6/RelValTTbar_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_v4_multiCoreResub-v1/10000/F2AF782A-89D6-E511-B103-0025905A6076.root' 
+       #'/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/3CE7A3C8-E8D6-E511-A91C-0CC47A78A436.root',
+       #'/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/545783CA-E8D6-E511-A610-0025905B85CA.root',
+       #'/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/5C7684C5-E8D6-E511-B9F7-0CC47A7452D0.root',
+       #'/store/relval/CMSSW_8_0_0_pre6/JetHT/MINIAOD/80X_dataRun2_v4_multiCoreResub_RelVal_jetHT2015D-v1/10000/769043CD-E8D6-E511-8CC7-0CC47A78A3EE.root'
 #'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/2A7077F8-DDD0-E511-81E1-0025905B860E.root',
 #'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/2C4C2526-E3D0-E511-A45A-002618FDA248.root',
 #'/store/relval/CMSSW_8_0_0_pre6/RelValQCD_FlatPt_15_3000HS_13/GEN-SIM-RECO/80X_mcRun2_asymptotic_v4-v1/10000/4C0F14C4-DCD0-E511-AD33-0CC47A4D76A2.root',
@@ -75,11 +83,11 @@ process.dqmSaver.workflow = Workflow
 process.dump = cms.EDAnalyzer("EventContentAnalyzer")
 
 process.p = cms.Path(                    #process.dump*
-                     process.jetMETDQMOfflineSourceMiniAOD*
+                     #process.jetMETDQMOfflineSourceMiniAOD*
                      #for cosmic data and MC
                      #process.jetMETDQMOfflineSourceCosmic*
                      #for Data and MC pp and HI
-                     #process.jetMETDQMOfflineSource*
+                     process.jetMETDQMOfflineSource*
                      process.dataCertificationJetMETSequence*
                      process.dqmSaver
                      )

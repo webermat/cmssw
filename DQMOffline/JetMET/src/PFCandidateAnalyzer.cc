@@ -225,7 +225,69 @@ void PFCandidateAnalyzer::bookHistograms(DQMStore::IBooker & ibooker,
     map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"IsoPfChHad_HCAL_profile_endcap"        ,mProfileIsoPFChHad_HcalOccupancyEndcap));
     mProfileIsoPFChHad_HadPtEndcap=ibooker.book2D("IsoPfChHad_HadPt_endcap",hist_tempPt_HCAL);
     map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"IsoPfChHad_HadPt_endcap"        ,mProfileIsoPFChHad_HadPtEndcap));
-  }else{
+
+    //actual HCAL segmentation in pseudorapidity -> reduce by a factor of two
+    //const int nbins_eta_hcal_total=54;   
+    //double eta_limits_hcal_total[nbins_eta_hcal_total]={-2.650,-2.500,-2.322,-2.172,-2.043,-1.930,-1.830,-1.740,-1.653,-1.566,-1.479,-1.392,-1.305, 
+    //						      -1.218,-1.131,-1.044,-0.957,-0.870,-0.783,-0.696,-0.609,-0.522,-0.435,-0.348,-0.261,-0.174,-0.087,0.0,
+    //						      0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.783, 0.870, 0.957, 1.044, 1.131, 1.218
+    //						      1.305, 1.392, 1.479, 1.566, 1.653, 1.740, 1.830, 1.930, 2.043, 2.172, 2.322, 2.500, 2.650}
+    //
+    
+    const int nbins_eta_hcal_total=28;   
+    double eta_limits_hcal_total[nbins_eta_hcal_total]={-2.650,-2.322,-2.043,-1.830,-1.653,-1.479,-1.305,-1.131,-0.957,-0.783,-0.609,-0.435,-0.261,-0.087,
+    							0.087, 0.261, 0.435, 0.609, 0.783, 0.957, 1.131, 1.305, 1.479, 1.653, 1.830, 2.043, 2.322, 2.650};
+    float eta_limits_hcal_total_f[nbins_eta_hcal_total];
+    float log_bin_spacing = log(200.)/40.;
+    const int nbins_pt_total_hcal= 41;
+    double pt_limits_hcal[nbins_pt_total_hcal];
+    float pt_limits_hcal_f[nbins_pt_total_hcal];
+    for(int i=0;i<nbins_pt_total_hcal;i++){
+      pt_limits_hcal[i]=exp(i*log_bin_spacing);
+      pt_limits_hcal_f[i]=exp(i*log_bin_spacing);
+    }
+    for(int i=0;i<nbins_eta_hcal_total;i++){
+      eta_limits_hcal_total_f[i]=(float)eta_limits_hcal_total[i];
+    }
+    m_HoverTrackP_trackPtVsEta= ibooker.book2D("HOverTrackP_EtaVsPt","HOverTrackP_EtaVsPt",nbins_pt_total_hcal-1,pt_limits_hcal_f,nbins_eta_hcal_total-1,eta_limits_hcal_total_f);
+    m_HoverTrackPVsTrackP_Barrel = ibooker.bookProfile("HOverTrackPVsTrackP_Barrel","HOverTrackPVsTrackP_Barrel",nbins_pt_total_hcal-1,pt_limits_hcal, 0, 4, " ");
+    m_HoverTrackPVsTrackP_EndCap = ibooker.bookProfile("HOverTrackPVsTrackP_EndCap","HOverTrackPVsTrackP_EndCap",nbins_pt_total_hcal-1,pt_limits_hcal, 0, 4, " ");
+    m_HoverTrackPVsTrackPt_Barrel = ibooker.bookProfile("HOverTrackPVsTrackPt_Barrel","HOverTrackPVsTrackPt_Barrel",nbins_pt_total_hcal-1,pt_limits_hcal, 0, 4, " ");
+    m_HoverTrackPVsTrackPt_EndCap = ibooker.bookProfile("HOverTrackPVsTrackPt_EndCap","HOverTrackPVsTrackPt_EndCap",nbins_pt_total_hcal-1,pt_limits_hcal, 0, 4, " ");
+ 
+    m_HoverTrackPVsEta_hPt_1_10 = ibooker.bookProfile("HoverTrackPVsEta_hPt_1_10","HoverTrackPVsEta, 1<hPt<10 GeV",nbins_eta_hcal_total-1, eta_limits_hcal_total, 0, 4, " ");
+    m_HoverTrackPVsEta_hPt_10_20 = ibooker.bookProfile("HoverTrackPVsEta_hPt_10_20","HoverTrackPVsEta, 10<hPt<20 GeV",nbins_eta_hcal_total-1, eta_limits_hcal_total, 0, 4, " ");
+    m_HoverTrackPVsEta_hPt_20_50 = ibooker.bookProfile("HoverTrackPVsEta_hPt_20_50","HoverTrackPVsEta, 20<hPt<50 GeV",nbins_eta_hcal_total-1, eta_limits_hcal_total, 0, 4, " ");
+    m_HoverTrackPVsEta_hPt_50 = ibooker.bookProfile("HoverTrackPVsEta_hPt_50","HoverTrackPVsEta, hPt>50 GeV",nbins_eta_hcal_total-1, eta_limits_hcal_total, 0, 4, " ");
+
+    m_HoverTrackP_Barrel_hPt_1_10= ibooker.book1D("HoverTrackP_Barrel_hPt_1_10","HOverTrackP_B, 1<hPt<10 GeV",50,0,4);
+    m_HoverTrackP_Barrel_hPt_10_20= ibooker.book1D("HoverTrackP_Barrel_hPt_10_20","HOverTrackP_B, 10<hPt<20 GeV",50,0,4);
+    m_HoverTrackP_Barrel_hPt_20_50= ibooker.book1D("HoverTrackP_Barrel_hPt_20_50","HOverTrackP_B, 20<hPt<50 GeV",50,0,4);
+    m_HoverTrackP_Barrel_hPt_50= ibooker.book1D("HoverTrackP_Barrel_hPt_50","HOverTrackP_B, hPt>50 GeV",50,0,4);
+
+    m_HoverTrackP_EndCap_hPt_1_10= ibooker.book1D("HoverTrackP_EndCap_hPt_1_10","HOverTrackP_E, 1<hPt<10 GeV",50,0,4);
+    m_HoverTrackP_EndCap_hPt_10_20= ibooker.book1D("HoverTrackP_EndCap_hPt_10_20","HOverTrackP_E, 10<hPt<20 GeV",50,0,4);
+    m_HoverTrackP_EndCap_hPt_20_50= ibooker.book1D("HoverTrackP_EndCap_hPt_20_50","HOverTrackP_E, 20<hPt<50 GeV",50,0,4);
+    m_HoverTrackP_EndCap_hPt_50= ibooker.book1D("HoverTrackP_EndCap_hPt_50","HOverTrackP_E, hPt>50 GeV",50,0,4);
+
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HOverTrackP_EtaVsPt"        ,m_HoverTrackP_trackPtVsEta));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsTrackP_Barrel"        ,m_HoverTrackPVsTrackP_Barrel));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsTrackP_EndCap"        ,m_HoverTrackPVsTrackP_EndCap));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsTrackPt_Barrel"        ,m_HoverTrackPVsTrackPt_Barrel));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsTrackPt_EndCap"        ,m_HoverTrackPVsTrackPt_EndCap));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsEta_hPt_1_10"        ,m_HoverTrackPVsEta_hPt_1_10));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsEta_hPt_10_20"        ,m_HoverTrackPVsEta_hPt_10_20));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsEta_hPt_20_50"        ,m_HoverTrackPVsEta_hPt_20_50));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackPVsEta_hPt_50"        ,m_HoverTrackPVsEta_hPt_50));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_Barrel_hPt_1_10"        ,m_HoverTrackP_Barrel_hPt_1_10));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_Barrel_hPt_10_20"        ,m_HoverTrackP_Barrel_hPt_10_20));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_Barrel_hPt_20_50"        ,m_HoverTrackP_Barrel_hPt_20_50));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_Barrel_hPt_50"        ,m_HoverTrackP_Barrel_hPt_50));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_EndCap_hPt_1_10"        ,m_HoverTrackP_EndCap_hPt_1_10));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_EndCap_hPt_10_20"        ,m_HoverTrackP_EndCap_hPt_10_20));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_EndCap_hPt_20_50"        ,m_HoverTrackP_EndCap_hPt_20_50));
+    map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+"HoverTrackP_EndCap_hPt_50"        ,m_HoverTrackP_EndCap_hPt_50));
+  }else{//MiniAOD workflow
     if(!etaMinPFCand_.empty()){
       etaMinPFCand_.clear();
       etaMaxPFCand_.clear();
@@ -301,6 +363,8 @@ void PFCandidateAnalyzer::bookHistograms(DQMStore::IBooker & ibooker,
       map_of_MEs.insert(std::pair<std::string,MonitorElement*>(DirName+"/"+ ptPFCand_name_[ptPFCand_name_.size()-1], ptPFCand_[ptPFCand_.size()-1]));
     }
   }   
+
+
 }	
 
 // ***********************************************************
@@ -486,6 +550,44 @@ void PFCandidateAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
 		  if (mProfileIsoPFChHad_TrackOccupancy  && mProfileIsoPFChHad_TrackOccupancy->getRootObject()) mProfileIsoPFChHad_TrackOccupancy->Fill(et.trackRef()->eta(),et.trackRef()->phi());
 		  mProfileIsoPFChHad_TrackPt=map_of_MEs[DirName+"/"+"IsoPfChHad_TrackPt"];
 		  if (mProfileIsoPFChHad_TrackPt  && mProfileIsoPFChHad_TrackPt->getRootObject()) mProfileIsoPFChHad_TrackPt->Fill(et.trackRef()->eta(),et.trackRef()->phi(),et.trackRef()->pt());
+		  if(c.rawEcalEnergy()==0){//isolated hadron, nothing in ECAL
+		    //right now take corrected hcalEnergy, do we want the rawHcalEnergy instead
+		    if(m_HoverTrackP_trackPtVsEta  && m_HoverTrackP_trackPtVsEta->getRootObject()) m_HoverTrackP_trackPtVsEta->Fill(c.pt(), c.eta(), c.hcalEnergy()/et.trackRef()->p());
+		    if(c.pt()>1 && c.pt()<10){
+		      if(m_HoverTrackPVsEta_hPt_1_10  && m_HoverTrackPVsEta_hPt_1_10->getRootObject()) m_HoverTrackPVsEta_hPt_1_10->Fill(c.eta(), c.hcalEnergy()/et.trackRef()->p());
+		    }else if(c.pt()>10 && c.pt()<20){
+		      if(m_HoverTrackPVsEta_hPt_10_20  && m_HoverTrackPVsEta_hPt_10_20->getRootObject()) m_HoverTrackPVsEta_hPt_10_20->Fill(c.eta(), c.hcalEnergy()/et.trackRef()->p());
+		    }else if(c.pt()>20 && c.pt()<50){
+		      if(m_HoverTrackPVsEta_hPt_20_50  && m_HoverTrackPVsEta_hPt_20_50->getRootObject()) m_HoverTrackPVsEta_hPt_20_50->Fill(c.eta(), c.hcalEnergy()/et.trackRef()->p());
+		    }else if(c.pt()>50){
+		      if(m_HoverTrackPVsEta_hPt_50  && m_HoverTrackPVsEta_hPt_50->getRootObject()) m_HoverTrackPVsEta_hPt_50->Fill(c.eta(), c.hcalEnergy()/et.trackRef()->p());
+		    }
+		    if(fabs(c.eta()<1.392)){
+		      if(c.pt()>1 && c.pt()<10){
+			if(m_HoverTrackP_Barrel_hPt_1_10 && m_HoverTrackP_Barrel_hPt_1_10->getRootObject()) m_HoverTrackP_Barrel_hPt_1_10->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }else if(c.pt()>10 && c.pt()<20){
+			if(m_HoverTrackP_Barrel_hPt_10_20 && m_HoverTrackP_Barrel_hPt_10_20->getRootObject()) m_HoverTrackP_Barrel_hPt_10_20->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }else if(c.pt()>20 && c.pt()<50){
+			if(m_HoverTrackP_Barrel_hPt_20_50 && m_HoverTrackP_Barrel_hPt_20_50->getRootObject()) m_HoverTrackP_Barrel_hPt_20_50->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }else if(c.pt()>50){
+			if(m_HoverTrackP_Barrel_hPt_50 && m_HoverTrackP_Barrel_hPt_50->getRootObject()) m_HoverTrackP_Barrel_hPt_50->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }
+		      if(m_HoverTrackPVsTrackP_Barrel  && m_HoverTrackPVsTrackP_Barrel->getRootObject()) m_HoverTrackPVsTrackP_Barrel->Fill(et.trackRef()->p(), c.hcalEnergy()/et.trackRef()->p());
+		      if(m_HoverTrackPVsTrackPt_Barrel  && m_HoverTrackPVsTrackPt_Barrel->getRootObject()) m_HoverTrackPVsTrackPt_Barrel->Fill(et.trackRef()->pt(), c.hcalEnergy()/et.trackRef()->p());
+		    }else{
+		      if(m_HoverTrackPVsTrackP_EndCap  && m_HoverTrackPVsTrackP_EndCap->getRootObject()) m_HoverTrackPVsTrackP_EndCap->Fill(et.trackRef()->p(), c.hcalEnergy()/et.trackRef()->p());
+		      if(m_HoverTrackPVsTrackPt_EndCap  && m_HoverTrackPVsTrackPt_EndCap->getRootObject())m_HoverTrackPVsTrackPt_EndCap->Fill(et.trackRef()->pt(), c.hcalEnergy()/et.trackRef()->p());
+		      if(c.pt()>1 && c.pt()<10){
+			if(m_HoverTrackP_EndCap_hPt_1_10 && m_HoverTrackP_EndCap_hPt_1_10->getRootObject()) m_HoverTrackP_EndCap_hPt_1_10->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }else if(c.pt()>10 && c.pt()<20){
+			if(m_HoverTrackP_EndCap_hPt_10_20 && m_HoverTrackP_EndCap_hPt_10_20->getRootObject()) m_HoverTrackP_EndCap_hPt_10_20->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }else if(c.pt()>20 && c.pt()<50){
+			if(m_HoverTrackP_EndCap_hPt_20_50 && m_HoverTrackP_EndCap_hPt_20_50->getRootObject()) m_HoverTrackP_EndCap_hPt_20_50->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }else if(c.pt()>50){
+			if(m_HoverTrackP_EndCap_hPt_50 && m_HoverTrackP_EndCap_hPt_50->getRootObject()) m_HoverTrackP_EndCap_hPt_50->Fill(c.hcalEnergy()/et.trackRef()->p());
+		      }
+		    }     
+		  }
 		  //ECAL element
 		  for(unsigned int ii=0;ii<iECAL.size();ii++) {
 		    const reco::PFBlockElementCluster& eecal = dynamic_cast<const reco::PFBlockElementCluster &>( elements[ iECAL[ii] ] );
@@ -500,10 +602,12 @@ void PFCandidateAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
 		      mProfileIsoPFChHad_EMPtEndcap=map_of_MEs[DirName+"/"+"IsoPfChHad_EMPt_endcap"];
 		      if (mProfileIsoPFChHad_EMPtEndcap  && mProfileIsoPFChHad_EMPtEndcap->getRootObject()) mProfileIsoPFChHad_EMPtEndcap->Fill(eecal.clusterRef()->eta(),eecal.clusterRef()->phi(),eecal.clusterRef()->pt());
 		    }
+
+
 		  }	
 		  //HCAL element
 		  for(unsigned int ii=0;ii<iHCAL.size();ii++) {
-		    const reco::PFBlockElementCluster& ehcal = dynamic_cast<const reco::PFBlockElementCluster &>( elements[ iHCAL[ii] ] );
+       		    const reco::PFBlockElementCluster& ehcal = dynamic_cast<const reco::PFBlockElementCluster &>( elements[ iHCAL[ii] ] );
 		    if(fabs(ehcal.clusterRef()->eta())<1.740){
 		      mProfileIsoPFChHad_HcalOccupancyCentral=map_of_MEs[DirName+"/"+"IsoPfChHad_HCAL_profile_central"];
 		      if (mProfileIsoPFChHad_HcalOccupancyCentral  && mProfileIsoPFChHad_HcalOccupancyCentral->getRootObject()) mProfileIsoPFChHad_HcalOccupancyCentral->Fill(ehcal.clusterRef()->eta(),ehcal.clusterRef()->phi());
