@@ -3,7 +3,7 @@ CMS Offline Software
 software analysing and reconstructing physics data of the particle physics multi-purpose detector CMS (Compact Muon Solenoid)
 situated at the Large Hadron Collider at CERN
 
-forked from the JetMETdqmval group repository:
+forked from the JetMETdqmval group repository https://github.com/JetMETdqmval :
 
 main working items in this repository
 DQMOffline/JetMET --> code for data quality monitoring purposes 
